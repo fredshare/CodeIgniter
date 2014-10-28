@@ -44,5 +44,23 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 + xhprof性能检测
 + MY_controller
 + MY_model
-+ 
 + 直连数据库
+
+#### Log日志系统
++ 引入日志类库
++ 实例化类
++ 打日志，日志路径一般放到/data/log目录下，并再按照controller分子目录管理
+![img](http://mulinstudio.qiniudn.com/github_QQ%E5%9B%BE%E7%89%8720141028132821.png)
+
+#### Crontab定时任务
++ 在shell目录中建立shell脚本文件。每隔一分钟执行的脚本放入1min.sh中，每隔十分钟需要执行的放入10min.hs。依次轮推。
++ 在脚本中写入相应的脚本。然后在linux的crontab文件中设置定时任务。
+···php
+cd /data/vb2c_lottery/web/htdocs_crontab
+#进入htdocs目录
+/usr/local/php/bin/php index.php timer tenMinute
+#使用ci框架的cli命令行执行timer控制器的tenMinute函数
+···
+
++ 在crontab中设置crontab命令。crontab编辑命令：Crontab –e
++ 
