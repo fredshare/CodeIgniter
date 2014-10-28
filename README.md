@@ -6,15 +6,15 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 详情见 [lampp安装文档](/)
 
 ## 开发根目录说明
-开发根目录
+开发根目录<br />
 ├─system				php ci框架的框架代码，不需要修改，升级时直接覆盖该目录 <br />
 ├─application			项目php代码目录，不可直接访问，被htdocs/index.php调用<br />
-│  └─config			    全局配置文件中心
-│  	├─dev			    dev环境配置中心
-│  	├─beta			    beta环境配置中心
-│  	├─gamma		        gamma环境配置中心
-│  	└─idc			    idc环境配置中心
-│  ├─controllers		业务逻辑组合，对外输出的业务逻辑组合
+│  └─config			    全局配置文件中心<br />
+│  	├─dev			    dev环境配置中心<br />
+│  	├─beta			    beta环境配置中心<br />
+│  	├─gamma		        gamma环境配置中心<br />
+│  	└─idc			    idc环境配置中心<br />
+│  ├─controllers		业务逻辑组合，对外输出的业务逻辑组合<br />
 │  ├─core				核心基类的继承
 │  	├─MY_controller		controller基类，cotroller控制器尽量基于次基类开发
 │  	└─MY_Model		    model基类，model处理器尽量基于此基类开发
