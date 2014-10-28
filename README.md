@@ -62,4 +62,13 @@ cd /data/vb2c_lottery/web/htdocs_crontab #进入htdocs目录
 </code>
 </pre>
 + 在crontab中设置crontab命令。crontab编辑命令：Crontab –e
-+ 
+<pre><code>
+* * * * * /路径/1min.sh >> 日志路径/shell/1min.log
+</code></pre>
+
+#### Xhprof性能检测
++ 安装xhprof扩展
++ 修改php.ini配置
++ 重启lampp
++ 每一万次请求开启一次xhprof （因为比较耗性能）
+
