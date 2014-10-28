@@ -44,4 +44,5 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 + xhprof性能检测
 + MY_controller
 + MY_model
++ 
 + 直连数据库
