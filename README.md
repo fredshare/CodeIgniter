@@ -7,7 +7,8 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 
 ## 开发根目录说明
 开发根目录<br />
-├─system				php ci框架的框架代码，不需要修改，升级时直接覆盖该目录 <br />
+<pre>
+├─system >>				php ci框架的框架代码，不需要修改，升级时直接覆盖该目录 <br />
 ├─application			项目php代码目录，不可直接访问，被htdocs/index.php调用<br />
 │  └─config			    全局配置文件中心<br />
 │  	├─dev			    dev环境配置中心<br />
@@ -35,6 +36,7 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 │      └─jsi			js文件引用页面片目录<br />
 ├─nodejs				nodejs服务框架(预留)<br />
 └─shell					定时任务执行shell<br />
+</pre>
 
 ## 常见功能部署
 + Log日志系统
