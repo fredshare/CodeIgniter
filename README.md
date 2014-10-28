@@ -42,9 +42,11 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 + Log日志系统
 + Crontab定时任务
 + xhprof性能检测
++ Cmem缓存扩展
 + MY_controller
 + MY_model
 + 直连数据库
+
 
 #### Log日志系统
 + 引入日志类库
@@ -62,13 +64,99 @@ cd /data/vb2c_lottery/web/htdocs_crontab #进入htdocs目录
 </code>
 </pre>
 + 在crontab中设置crontab命令。crontab编辑命令：Crontab –e
-<pre><code>
+<pre>
+<code>
 * * * * * /路径/1min.sh >> 日志路径/shell/1min.log
-</code></pre>
+</code>
+</pre>
 
 #### Xhprof性能检测
 + 安装xhprof扩展
 + 修改php.ini配置
+<pre>
+<code>
+extension=xhprof.so
+xhprof.output_dir=/home/fredshare/xhprof  //如果不加存放目录的话，默认是放在/tmp下面
+</code>
+</pre>
 + 重启lampp
+<pre>
+<code>
+/opt/lamp/lamp restart
+</code>
+</pre>
 + 每一万次请求开启一次xhprof （因为比较耗性能）
+<pre>
+<code>
+	if (mt_rand(1, 10000) == 1) {
+		if(function_exists("xhprof_enable")){
+			xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
+			$xhprof_on = true;
+		}else{
+			$xhprof_on = false;
+		}		
+	}else{
+		$xhprof_on = false;
+	}
 
+	define('ENVIRONMENT', 'development');
+  ....//省略
+/*
+ * --------------------------------------------------------------------
+ * LOAD THE BOOTSTRAP FILE
+ * --------------------------------------------------------------------
+ *
+ * And away we go...
+ *
+ */
+require_once BASEPATH.'core/CodeIgniter.php';
+
+if ($xhprof_on) {
+	// stop profiler
+	$xhprof_data = xhprof_disable();
+	$XHPROF_ROOT = realpath(dirname(__FILE__) . '/htdocs');
+	//echo $XHPROF_ROOT;
+	include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+	include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
+	//$xhprof_data somewhere (say a central DB)
+	$xhprof_runs = new XHProfRuns_Default();
+	$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof-test"); 
+}
+/* End of file index.php */
+</code>
+</pre>
+
+#### Cmem缓存扩展
++ 安装Cmem扩展
++ 设置好bid、modid、cmd等参数
++ 使用方法
+<pre>
+<code>
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Cmem extends MY_Controller {
+	public function __construct() {
+		parent::__construct();
+		require_once APPPATH . 'libraries/cmem/Mcache.php';
+	}
+	/**
+	 * @title 日志管理demo.
+	 */
+	public function index()
+	{
+		//使用封装的Mcache
+		$appname = "test";
+		$key = "php-cmem-plugin";
+		$value = "test";
+		$mcache = new Mcache();
+		$ret = $mcache->setCache($appname, $key, $value, 10);
+		var_dump($ret);
+		$ret = $mcache->getCache($appname, $key);
+		var_dump($ret);
+		$ret = $mcache->clearCache($appname, $key);
+		var_dump($ret);
+	}
+}
+?>
+</code>
+</pre>
