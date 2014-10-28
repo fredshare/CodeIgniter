@@ -57,37 +57,28 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 #### Crontab定时任务
 + 在shell目录中建立shell脚本文件。每隔一分钟执行的脚本放入1min.sh中，每隔十分钟需要执行的放入10min.hs。依次轮推。
 + 在脚本中写入相应的脚本。然后在linux的crontab文件中设置定时任务。
-<pre>
-<code>
+<pre><code>
 	cd /data/vb2c_lottery/web/htdocs_crontab #进入htdocs目录
 	/usr/local/php/bin/php index.php timer tenMinute  #使用ci框架的cli命令行执行timer控制器的tenMinute函数
-</code>
-</pre>
+</code></pre>
 + 在crontab中设置crontab命令。crontab编辑命令：Crontab –e
-<pre>
-<code>
+<pre><code>
 	* * * * * /路径/1min.sh >> 日志路径/shell/1min.log
-</code>
-</pre>
+</code></pre>
 
 #### Xhprof性能检测
 + 安装xhprof扩展
 + 修改php.ini配置
-<pre>
-<code>
+<pre><code>
 	extension=xhprof.so
 	xhprof.output_dir=/home/fredshare/xhprof  //如果不加存放目录的话，默认是放在/tmp下面
-</code>
-</pre>
+</code></pre>
 + 重启lampp
-<pre>
-<code>
+<pre><code>
 	/opt/lamp/lamp restart
-</code>
-</pre>
+</code></pre>
 + 每一万次请求开启一次xhprof （因为比较耗性能）
-<pre>
-<code>
+<pre><code>
 	if (mt_rand(1, 10000) == 1) {
 		if(function_exists("xhprof_enable")){
 			xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
@@ -101,14 +92,6 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 
 	define('ENVIRONMENT', 'development');
   	....//省略
-	/*
-	 * --------------------------------------------------------------------
-	 * LOAD THE BOOTSTRAP FILE
-	 * --------------------------------------------------------------------
-	 *
-	 * And away we go...
-	 *
-	 */
 	require_once BASEPATH.'core/CodeIgniter.php';
 	
 	if ($xhprof_on) {
@@ -121,16 +104,13 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 		//$xhprof_data somewhere (say a central DB)
 		$xhprof_runs = new XHProfRuns_Default();
 		$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof-test"); 
-	}
-</code>
-</pre>
+	}</code></pre>
 
 #### Cmem缓存扩展
 + 安装Cmem扩展
 + 设置好bid、modid、cmd等参数
 + 使用方法
-<pre>
-<code>
+<pre><code>
 	<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	class Cmem extends MY_Controller {
 		public function __construct() {
@@ -155,6 +135,4 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 			var_dump($ret);
 		}
 	}
-	?>
-</code>
-</pre>
+	?></code></pre>
