@@ -5,7 +5,7 @@ CodeIgniter
 Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 详情见 [lampp安装文档](/)
 
-## 开发根目录说明
+## 开发根目录说明 
 开发根目录<br />
 <pre>
 ├─system >>				php ci框架的框架代码，不需要修改，升级时直接覆盖该目录 
