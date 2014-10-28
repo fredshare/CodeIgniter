@@ -18,6 +18,18 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
+
+	if (mt_rand(1, 10000) == 1) {
+		if(function_exists("xhprof_enable")){
+			xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
+			$xhprof_on = true;
+		}else{
+			$xhprof_on = false;
+		}		
+	}else{
+		$xhprof_on = false;
+	}
+
 	define('ENVIRONMENT', 'development');
 /*
  *---------------------------------------------------------------
@@ -28,20 +40,20 @@
  * By default development will show errors but testing and live will hide them.
  */
 
-if (defined('ENVIRONMENT'))
-{
-	switch (ENVIRONMENT)
-	{
-		case 'development':
+if (defined('ENVIRONMENT')) {
+	switch (ENVIRONMENT) {
+		case 'dev' :
 			error_reporting(E_ALL);
-		break;
-	
-		case 'testing':
-		case 'production':
+			break;
+		case 'beta' :
+		case 'gamma' :
+			error_reporting(E_ALL);
+			break;
+		case 'idc' :
 			error_reporting(0);
-		break;
+			break;
 
-		default:
+		default :
 			exit('The application environment is not set correctly.');
 	}
 }
@@ -56,7 +68,7 @@ if (defined('ENVIRONMENT'))
  * as this file.
  *
  */
-	$system_path = 'system';
+	$system_path = '../system';
 
 /*
  *---------------------------------------------------------------
@@ -72,7 +84,7 @@ if (defined('ENVIRONMENT'))
  * NO TRAILING SLASH!
  *
  */
-	$application_folder = 'application';
+	$application_folder = '../application';
 
 /*
  * --------------------------------------------------------------------
@@ -201,5 +213,16 @@ if (defined('ENVIRONMENT'))
  */
 require_once BASEPATH.'core/CodeIgniter.php';
 
+if ($xhprof_on) {
+	// stop profiler
+	$xhprof_data = xhprof_disable();
+	$XHPROF_ROOT = realpath(dirname(__FILE__) . '/htdocs');
+	//echo $XHPROF_ROOT;
+	include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+	include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
+	//$xhprof_data somewhere (say a central DB)
+	$xhprof_runs = new XHProfRuns_Default();
+	$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof-test"); 
+}
 /* End of file index.php */
 /* Location: ./index.php */
