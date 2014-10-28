@@ -55,10 +55,11 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 #### Crontab定时任务
 + 在shell目录中建立shell脚本文件。每隔一分钟执行的脚本放入1min.sh中，每隔十分钟需要执行的放入10min.hs。依次轮推。
 + 在脚本中写入相应的脚本。然后在linux的crontab文件中设置定时任务。
+<pre>
 <code>
 cd /data/vb2c_lottery/web/htdocs_crontab #进入htdocs目录
 /usr/local/php/bin/php index.php timer tenMinute  #使用ci框架的cli命令行执行timer控制器的tenMinute函数
 </code>
-
+</pre>
 + 在crontab中设置crontab命令。crontab编辑命令：Crontab –e
 + 
