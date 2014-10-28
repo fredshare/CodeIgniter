@@ -59,14 +59,14 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 + 在脚本中写入相应的脚本。然后在linux的crontab文件中设置定时任务。
 <pre>
 <code>
-cd /data/vb2c_lottery/web/htdocs_crontab #进入htdocs目录
-/usr/local/php/bin/php index.php timer tenMinute  #使用ci框架的cli命令行执行timer控制器的tenMinute函数
+	cd /data/vb2c_lottery/web/htdocs_crontab #进入htdocs目录
+	/usr/local/php/bin/php index.php timer tenMinute  #使用ci框架的cli命令行执行timer控制器的tenMinute函数
 </code>
 </pre>
 + 在crontab中设置crontab命令。crontab编辑命令：Crontab –e
 <pre>
 <code>
-* * * * * /路径/1min.sh >> 日志路径/shell/1min.log
+	* * * * * /路径/1min.sh >> 日志路径/shell/1min.log
 </code>
 </pre>
 
@@ -75,14 +75,14 @@ cd /data/vb2c_lottery/web/htdocs_crontab #进入htdocs目录
 + 修改php.ini配置
 <pre>
 <code>
-extension=xhprof.so
-xhprof.output_dir=/home/fredshare/xhprof  //如果不加存放目录的话，默认是放在/tmp下面
+	extension=xhprof.so
+	xhprof.output_dir=/home/fredshare/xhprof  //如果不加存放目录的话，默认是放在/tmp下面
 </code>
 </pre>
 + 重启lampp
 <pre>
 <code>
-/opt/lamp/lamp restart
+	/opt/lamp/lamp restart
 </code>
 </pre>
 + 每一万次请求开启一次xhprof （因为比较耗性能）
@@ -100,29 +100,28 @@ xhprof.output_dir=/home/fredshare/xhprof  //如果不加存放目录的话，默
 	}
 
 	define('ENVIRONMENT', 'development');
-  ....//省略
-/*
- * --------------------------------------------------------------------
- * LOAD THE BOOTSTRAP FILE
- * --------------------------------------------------------------------
- *
- * And away we go...
- *
- */
-require_once BASEPATH.'core/CodeIgniter.php';
-
-if ($xhprof_on) {
-	// stop profiler
-	$xhprof_data = xhprof_disable();
-	$XHPROF_ROOT = realpath(dirname(__FILE__) . '/htdocs');
-	//echo $XHPROF_ROOT;
-	include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
-	include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
-	//$xhprof_data somewhere (say a central DB)
-	$xhprof_runs = new XHProfRuns_Default();
-	$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof-test"); 
-}
-/* End of file index.php */
+  	....//省略
+	/*
+	 * --------------------------------------------------------------------
+	 * LOAD THE BOOTSTRAP FILE
+	 * --------------------------------------------------------------------
+	 *
+	 * And away we go...
+	 *
+	 */
+	require_once BASEPATH.'core/CodeIgniter.php';
+	
+	if ($xhprof_on) {
+		// stop profiler
+		$xhprof_data = xhprof_disable();
+		$XHPROF_ROOT = realpath(dirname(__FILE__) . '/htdocs');
+		//echo $XHPROF_ROOT;
+		include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+		include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
+		//$xhprof_data somewhere (say a central DB)
+		$xhprof_runs = new XHProfRuns_Default();
+		$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof-test"); 
+	}
 </code>
 </pre>
 
@@ -132,31 +131,30 @@ if ($xhprof_on) {
 + 使用方法
 <pre>
 <code>
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-class Cmem extends MY_Controller {
-	public function __construct() {
-		parent::__construct();
-		require_once APPPATH . 'libraries/cmem/Mcache.php';
+	<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+	class Cmem extends MY_Controller {
+		public function __construct() {
+			parent::__construct();
+			require_once APPPATH . 'libraries/cmem/Mcache.php';
+		}
+		/**
+		 * @title 日志管理demo.
+		 */
+		public function index()
+		{
+			//使用封装的Mcache
+			$appname = "test";
+			$key = "php-cmem-plugin";
+			$value = "test";
+			$mcache = new Mcache();
+			$ret = $mcache->setCache($appname, $key, $value, 10);
+			var_dump($ret);
+			$ret = $mcache->getCache($appname, $key);
+			var_dump($ret);
+			$ret = $mcache->clearCache($appname, $key);
+			var_dump($ret);
+		}
 	}
-	/**
-	 * @title 日志管理demo.
-	 */
-	public function index()
-	{
-		//使用封装的Mcache
-		$appname = "test";
-		$key = "php-cmem-plugin";
-		$value = "test";
-		$mcache = new Mcache();
-		$ret = $mcache->setCache($appname, $key, $value, 10);
-		var_dump($ret);
-		$ret = $mcache->getCache($appname, $key);
-		var_dump($ret);
-		$ret = $mcache->clearCache($appname, $key);
-		var_dump($ret);
-	}
-}
-?>
+	?>
 </code>
 </pre>
