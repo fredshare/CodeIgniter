@@ -130,24 +130,24 @@ Linux、Apache、Mysql、PHP、phpMyAdmin组合：LAMP
 #### 直连数据库
 + 配置数据库信息，在config/database.php中配置
 <pre><code>$active_group = 'fredshare';
-$active_record = TRUE;
-
-// 开发环境数据库
-$db['fredshare']['hostname'] = '';//ip加port
-$db['fredshare']['username'] = 'fredshare';
-$db['fredshare']['password'] = 'fredshare';
-$db['fredshare']['database'] = 'fredshare';
-$db['fredshare']['dbdriver'] = 'mysql';
-$db['fredshare']['dbprefix'] = '';
-$db['fredshare']['pconnect'] = FALSE;
-$db['fredshare']['db_debug'] = TRUE;
-$db['fredshare']['cache_on'] = FALSE;
-$db['fredshare']['cachedir'] = '';
-$db['fredshare']['char_set'] = 'utf8';
-$db['fredshare']['dbcollat'] = 'utf8_general_ci';
-$db['fredshare']['swap_pre'] = '';
-$db['fredshare']['autoinit'] = TRUE;
-$db['fredshare']['stricton'] = FALSE;</code></pre>
+	$active_record = TRUE;
+	
+	// 开发环境数据库
+	$db['fredshare']['hostname'] = '';//ip加port
+	$db['fredshare']['username'] = 'fredshare';
+	$db['fredshare']['password'] = 'fredshare';
+	$db['fredshare']['database'] = 'fredshare';
+	$db['fredshare']['dbdriver'] = 'mysql';
+	$db['fredshare']['dbprefix'] = '';
+	$db['fredshare']['pconnect'] = FALSE;
+	$db['fredshare']['db_debug'] = TRUE;
+	$db['fredshare']['cache_on'] = FALSE;
+	$db['fredshare']['cachedir'] = '';
+	$db['fredshare']['char_set'] = 'utf8';
+	$db['fredshare']['dbcollat'] = 'utf8_general_ci';
+	$db['fredshare']['swap_pre'] = '';
+	$db['fredshare']['autoinit'] = TRUE;
+	$db['fredshare']['stricton'] = FALSE;</code></pre>
 + 选择数据库，见mysql_model.php
 <pre><code>$this->load->database("fredshare"); </code></pre>
 + 通过sql操作数据库
